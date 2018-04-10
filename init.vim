@@ -15,6 +15,8 @@ set expandtab
 set wildmenu
 set wildignore=*.o,*~,*.pyc
 
+set splitbelow
+set splitright
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
@@ -29,13 +31,26 @@ Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'w0rp/ale'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
+Plug 'arithran/vim-delete-hidden-buffers'
 " Plug 'pangloss/vim-javascript'
 " Plug 'othree/yajs.vim'
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1
+
+" Linter config
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\}
+let g:ale_python_flake8_options = '--max-line-length=99'
+
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext 
+colorscheme OceanicNext
 
 let g:gitgutter_sign_added = '█'
 let g:gitgutter_sign_modified = '█'
