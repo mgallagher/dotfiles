@@ -5,7 +5,7 @@ set number
 set path+=**
 set scrolloff=5
 set updatetime=500
-set nowrap "Not a fan of line wrapping
+set nowrap " No line wrapping
 
 " Look into ftplugins for language-specific settings
 set smartindent
@@ -17,6 +17,7 @@ set wildignore=*.o,*~,*.pyc
 
 set splitbelow
 set splitright
+set noequalalways " Don't reset window sizes after closing
 "*****************************************************************************
 "" Plug install packages
 "*****************************************************************************
@@ -35,8 +36,12 @@ Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'arithran/vim-delete-hidden-buffers'
-" Plug 'pangloss/vim-javascript'
-" Plug 'othree/yajs.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'mattn/emmet-vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-unimpaired'
+Plug 'junegunn/limelight.vim'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -56,9 +61,17 @@ let g:gitgutter_sign_added = '█'
 let g:gitgutter_sign_modified = '█'
 let g:gitgutter_sign_removed = '█'
 
+" Airline config
 let g:airline_theme='oceanicnext'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#format = 1 " Only show the end of the branch, split on '/'
+let g:airline#extensions#branch#displayed_head_limit = 25 " Truncate long branch names
+let g:airline#extensions#default#layout = [
+  \ [ 'a', 'b', 'c' ],
+  \ [ 'x', 'z', 'error', 'warning' ]
+  \ ]
+
 "*****************************************************************************
 "" Key mappings
 "*****************************************************************************
@@ -68,12 +81,23 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" Get rid of any highlighting when escape is pressed
 noremap <silent><esc> <esc>:noh<CR><esc>
+
+" fzf.vim mappings
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :GFiles<CR>
+nnoremap <leader>t :Tags<CR>
 
 "*****************************************************************************
 "" Sensible Vim (https://github.com/tpope/vim-sensible)
 "*****************************************************************************
 if filereadable(expand("~/.config/nvim/sensible.vim"))
   source ~/.config/nvim/sensible.vim
+endif
+
+if !has('gui_running')
+  map "in Insert mode, type Ctrl+v Alt+n here" <A-n>
 endif
 
