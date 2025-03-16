@@ -1,0 +1,73 @@
+[language-server.tailwindcss-ls]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
+[language-server.tailwindcss-ls.config]
+tailwindCSS = { experimental = { classRegex = [ "tw`([^`]*)", "tw\\(.*?['\"](.*?)['\"]", "clsx\\(([^)]*)\\)", ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"], ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"], "\\/\\*tw\\*\\/([^`]*)", "(?:className|class)\\s*=\\s*[\"'`]([^\"'`]*).*" ] } }
+
+[[language]]
+name = "html"
+language-servers = [ "vscode-html-language-server", "tailwindcss-ls" ]
+formatter = { command = "prettier" }
+
+[[language]]
+name = "css"
+language-servers = [ "vscode-css-language-server", "tailwindcss-ls" ]
+formatter = { command = "prettier" }
+
+[[language]]
+name = "jsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
+formatter = { command = "prettier" }
+
+[[language]]
+name = "tsx"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
+formatter = { command = "eslint" }
+# language-servers = ["eslint" ]
+
+# ESLint config
+# [language-server.eslint]
+# command = "vscode-eslint-language-server"
+# args = ["--stdio"]
+
+# [language-server.eslint.config]
+# validate = "on"
+# # experimental = { useFlatConfig = false }
+# experimental = {}
+# rulesCustomizations = []
+# run = "onType"
+# problems = { shortenToSingleLine = false }
+# nodePath = ""
+
+# [language-server.eslint.config.codeAction.disableRuleComment]
+# enable = true
+# location = "separateLine"
+
+# [language-server.eslint.config.codeAction.showDocumentation]
+# enable = true
+
+# [language-server.eslint.config.workingDirectory]
+# mode = "location"
+
+# Other ESLint config
+[language-server.eslint]
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+
+[language-server.eslint.config]
+codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
+format = { enable = true }
+nodePath = ""
+quiet = false
+rulesCustomizations = []
+run = "onType"
+validate = "on"
+experimental = {}
+problems = { shortenToSingleLine = false }
+# workingDirectory = { mode = "location" }  # Didn't make a difference
+
+[language-server.eslint.config.codeAction]
+disableRuleComment = { enable = true, location = "separateLine" }
+showDocumentation = { enable = false }
+

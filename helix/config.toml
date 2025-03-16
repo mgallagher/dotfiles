@@ -1,0 +1,53 @@
+theme = "catppuccin_macchiato"
+
+[editor]
+true-color = true
+color-modes = true
+cursorline = true
+cursorcolumn = true
+bufferline = "multiple"
+# Prioritize home row keys for the 'gw' picker
+jump-label-alphabet = "jfkdls;aurieowpqnvmcxz"
+# Inline diagnostics - looks nice, but the code jumps around a bit too much for my liking
+# end-of-line-diagnostics = "hint"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.inline-diagnostics]
+# See note above about the inline diagnostics
+# cursor-line = "warning" # show warnings and errors on the cursorline inline
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+x = "select_line_below"
+X = "select_line_above"
+ret = "goto_word"
+
+# Lazygit popup window
+C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80% -h80% -E /home/mgallagher/lazygit'
+
+# Create a single quote minor mode. Semicolon would also be good!
+[keys.normal."'"]
+w = "move_next_sub_word_start"
+b = "move_prev_sub_word_start"
+e = "move_next_sub_word_end"
+
+# Backslash minor mode
+[keys.normal."\\"]
+c = ":config-open"
+r = ":config-reload"
+
+# Other themes I like
+# everforst_dark
+# github_dark_dimmed
+# material_darker
+# nightfox
+# onedark
+# snazzy
+# sonokai
+
