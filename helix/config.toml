@@ -29,7 +29,7 @@ X = "select_line_above"
 ret = "goto_word"
 
 # Lazygit popup window
-C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80% -h80% -E /home/mgallagher/lazygit'
+C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
 
 # Create a single quote minor mode. Semicolon would also be good!
 [keys.normal."'"]
@@ -50,4 +50,3 @@ r = ":config-reload"
 # onedark
 # snazzy
 # sonokai
-
