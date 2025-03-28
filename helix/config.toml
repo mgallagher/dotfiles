@@ -31,7 +31,7 @@ ret = "goto_word"
 # Lazygit popup window
 C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
 
-# Create a single quote minor mode. Semicolon would also be good!
+# Single quote minor mode
 [keys.normal."'"]
 w = "move_next_sub_word_start"
 b = "move_prev_sub_word_start"
@@ -41,10 +41,14 @@ e = "move_next_sub_word_end"
 # made more general by removing the prefix and everything after
 t = '@/[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]*tw-[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]+<ret>'
 
-# Backslash minor mode
+# Backslash minor mode for config stuff
 [keys.normal."\\"]
 c = ":config-open"
 r = ":config-reload"
+l = ":open ~/.config/helix/languages.toml"
+t = ":open ~/.config/tmux/tmux.conf"
+z = ":open ~/.zshrc"
+b = ":open ~/.bashrc"
 
 # Other themes I like
 # everforst_dark
