@@ -5,19 +5,17 @@ true-color = true
 color-modes = true
 cursorline = true
 cursorcolumn = true
-bufferline = "multiple"
+end-of-line-diagnostics = "hint"
 # Prioritize home row keys for the 'gw' picker
 jump-label-alphabet = "jfkdls;aurieowpqnvmcxz"
-# Inline diagnostics - looks nice, but the code jumps around a bit too much for my liking
-# end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
 
-[editor.inline-diagnostics]
-# See note above about the inline diagnostics
+# Inline diagnostics - looks nice, but the code jumps around a bit too much for my liking
+# [editor.inline-diagnostics]
 # cursor-line = "warning" # show warnings and errors on the cursorline inline
 
 [editor.file-picker]
@@ -27,9 +25,14 @@ hidden = false
 x = "select_line_below"
 X = "select_line_above"
 ret = "goto_word"
-
+# Move around windows
+A-h ="jump_view_left"
+A-l ="jump_view_right"
+A-j ="jump_view_down"
+A-k ="jump_view_up"
 # Lazygit popup window
-C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
+C-l = ":sh zellij run -c -f --width 90%% --height 90%% -x 5%% -y 5%% -- lazygit"
+# C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
 
 # Single quote minor mode
 [keys.normal."'"]
@@ -47,6 +50,7 @@ c = ":config-open"
 r = ":config-reload"
 l = ":open ~/.config/helix/languages.toml"
 t = ":open ~/.config/tmux/tmux.conf"
+j = ":open ~/.config/zellij/config.kdl"
 z = ":open ~/.zshrc"
 b = ":open ~/.bashrc"
 
