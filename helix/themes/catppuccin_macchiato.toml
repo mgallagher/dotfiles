@@ -1,0 +1,16 @@
+inherits = "catppuccin_macchiato"
+
+# Add colored border to popup menu and blend bg in with everything else
+"ui.popup" = { fg = "sky", bg = "base" }
+
+# Less contrast on cursor lines and selections
+"ui.cursorcolumn.primary" = { bg = "#282b41" }
+"ui.selection" = { bg = "surface0" }
+
+# Darker menus
+"ui.menu" = { fg = "subtext0", bg = "mantle" }
+"ui.help" = { fg = "subtext0", bg = "mantle" }
+
+[palette]
+# Less contrast on cursor lines
+cursorline = "#292d45"

@@ -21,18 +21,31 @@ select = "underline"
 [editor.file-picker]
 hidden = false
 
+[keys.select]
+x = "select_line_below"
+X = "select_line_above"
+ret = "goto_word"
+
 [keys.normal]
 x = "select_line_below"
 X = "select_line_above"
 ret = "goto_word"
+
 # Move around windows
-A-h ="jump_view_left"
-A-l ="jump_view_right"
-A-j ="jump_view_down"
-A-k ="jump_view_up"
+A-h = "jump_view_left"
+A-l = "jump_view_right"
+A-j = "jump_view_down"
+A-k = "jump_view_up"
 # Lazygit popup window
 C-l = ":sh zellij run -c -f --width 90%% --height 90%% -x 5%% -y 5%% -- lazygit"
 # C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
+ 
+# Kakoune-like extend (not sure about this)
+# E = "extend_next_word_end"
+# W = "extend_next_word_start"
+# B = "extend_prev_word_end"
+# H = "extend_char_left"
+# L = "extend_char_right"
 
 # Single quote minor mode
 [keys.normal."'"]
@@ -43,6 +56,10 @@ e = "move_next_sub_word_end"
 # classes from anywhere, but this won't work for most tailwind projects. Can be
 # made more general by removing the prefix and everything after
 t = '@/[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]*tw-[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]+<ret>'
+
+[keys.normal." ".v]
+b = ":sh git blame --date=short -L %{cursor_line},+1 %{buffer_name}"
+u = ":sh gh browse -n %{buffer_name}:%{cursor_line}"
 
 # Backslash minor mode for config stuff
 [keys.normal."\\"]
