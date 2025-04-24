@@ -8,6 +8,7 @@ cursorcolumn = true
 end-of-line-diagnostics = "hint"
 # Prioritize home row keys for the 'gw' picker
 jump-label-alphabet = "jfkdls;aurieowpqnvmcxz"
+clipboard-provider = "termcode"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -57,9 +58,14 @@ e = "move_next_sub_word_end"
 # made more general by removing the prefix and everything after
 t = '@/[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]*tw-[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]+<ret>'
 
-[keys.normal." ".v]
-b = ":sh git blame --date=short -L %{cursor_line},+1 %{buffer_name}"
+# <space><space> for git commands
+[keys.normal.space.space]
+# Nicely formatted single-line git blame
+b = ":sh git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -1 --format='medium'"
+# Show a github URL
 u = ":sh gh browse -n %{buffer_name}:%{cursor_line}"
+# Open the file in the git blame pager and go to the current line
+B = ":sh zellij run -fc -- git blame --color-by-age --color-lines %{buffer_name} && zellij action write-chars %{cursor_line}g"
 
 # Backslash minor mode for config stuff
 [keys.normal."\\"]
