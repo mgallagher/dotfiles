@@ -9,6 +9,17 @@ end-of-line-diagnostics = "hint"
 # Prioritize home row keys for the 'gw' picker
 jump-label-alphabet = "jfkdls;aurieowpqnvmcxz"
 clipboard-provider = "termcode"
+insert-final-newline = false
+popup-border = "all"
+
+[editor.statusline]
+right = ["diagnostics", "selections", "register", "position", "position-percentage", "file-encoding"]
+
+[editor.whitespace.render]
+newline = "all"
+
+[editor.whitespace.characters]
+newline = "¬"
 
 [editor.cursor-shape]
 insert = "bar"

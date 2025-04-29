@@ -7,6 +7,7 @@ tailwindCSS = { experimental = { classRegex = [ "tw`([^`]*)", "tw\\(.*?['\"](.*?
 
 [[language]]
 name = "html"
+auto-format = false
 language-servers = [ "vscode-html-language-server", "tailwindcss-ls" ]
 formatter = { command = "prettier" }
 
@@ -18,12 +19,14 @@ formatter = { command = "prettier" }
 [[language]]
 name = "jsx"
 language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
+block-comment-tokens = { start = "{/*", end = "*/}" }
 formatter = { command = "prettier" }
 
 [[language]]
 name = "tsx"
 language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
 formatter = { command = "eslint" }
+block-comment-tokens = { start = "{/*", end = "*/}" }
 
 [[language]]
 name = "json"

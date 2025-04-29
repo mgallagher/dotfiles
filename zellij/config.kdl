@@ -1,3 +1,5 @@
+// Mostly vanilla Zellij config with a few commented overrides
+
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
@@ -51,6 +53,9 @@ keybinds clear-defaults=true {
         bind "t" { SwitchToMode "normal"; }
         bind "x" { CloseTab; SwitchToMode "locked"; }
         bind "tab" { ToggleTab; }
+        // Move the MoveTab functionality from Alt o/i to the Tab menu
+        bind "o" { MoveTab "right"; }
+        bind "i" { MoveTab "left"; }
     }
     resize {
         bind "left" { Resize "Increase left"; }
@@ -147,7 +152,7 @@ keybinds clear-defaults=true {
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
         bind "Alt f" { ToggleFloatingPanes; }
-        // Using these to moving around windows inside Helix
+        // Using these to move around windows inside Helix
         // bind "Alt h" { MoveFocusOrTab "left"; }
         // bind "Alt j" { MoveFocus "down"; }
         // bind "Alt k" { MoveFocus "up"; }
@@ -306,7 +311,7 @@ mouse_mode true
 // (Requires restart)
 // Default: false
 // 
-// mirror_session true
+mirror_session true
  
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
 // eg. when terminal window with an active zellij session is closed
@@ -354,7 +359,7 @@ mouse_mode true
  
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
-// scrollback_editor "/usr/bin/vim"
+scrollback_editor "hx"
  
 // A fixed name to always give the Zellij session.
 // Consider also setting `attach_to_session true,`
@@ -394,7 +399,7 @@ mouse_mode true
 // defaults to the scrollback size. If this number is higher than the scrollback size, it will
 // also default to the scrollback size. This does nothing if `serialize_pane_viewport` is not true.
 // 
-// scrollback_lines_to_serialize 10000
+scrollback_lines_to_serialize 50000
  
 // Enable or disable the rendering of styled and colored underlines (undercurl).
 // May need to be disabled for certain unsupported terminals
