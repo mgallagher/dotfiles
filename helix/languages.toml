@@ -1,19 +1,16 @@
-[language-server.tailwindcss-ls]
-command = "tailwindcss-language-server"
-args = ["--stdio"]
-
-[language-server.tailwindcss-ls.config]
-tailwindCSS = { experimental = { classRegex = [ "tw`([^`]*)", "tw\\(.*?['\"](.*?)['\"]", "clsx\\(([^)]*)\\)", ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"], ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"], "\\/\\*tw\\*\\/([^`]*)", "(?:className|class)\\s*=\\s*[\"'`]([^\"'`]*).*" ] } }
-
 [[language]]
 name = "html"
-auto-format = false
 language-servers = [ "vscode-html-language-server", "tailwindcss-ls" ]
 formatter = { command = "prettier" }
 
 [[language]]
 name = "css"
 language-servers = [ "vscode-css-language-server", "tailwindcss-ls" ]
+formatter = { command = "prettier" }
+
+[[language]]
+name = "javascript"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
 formatter = { command = "prettier" }
 
 [[language]]
@@ -25,12 +22,25 @@ formatter = { command = "prettier" }
 [[language]]
 name = "tsx"
 language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
-formatter = { command = "eslint" }
+roots = ["package.json"]
+# Using eslint_d as a formatter since we have a few rules that apply rule formatting + Prettier
+# Currently this fails the first time you run :format, but once the daemon is running it works just fine
+formatter = { command = "eslint_d" , args = ["--stdin", "--fix-to-stdout", "--stdin-filename", "page.tsx"] }
 block-comment-tokens = { start = "{/*", end = "*/}" }
+
+[[language]]
+name = "typescript"
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "eslint" ]
+# See note above about eslint_d
+formatter = { command = "eslint_d" , args = ["--stdin", "--fix-to-stdout", "--stdin-filename", "page.ts"] }
 
 [[language]]
 name = "json"
 language-servers = ["vscode-json-language-server"]
+
+[[language]]
+name = "python"
+language-servers = [ "pyright" ]
 
 # ESLint config
 [language-server.eslint]
@@ -38,17 +48,25 @@ command = "vscode-eslint-language-server"
 args = ["--stdio"]
 
 [language-server.eslint.config]
-codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
-format = { enable = true }
 nodePath = ""
-quiet = false
-rulesCustomizations = []
-run = "onType"
 validate = "on"
-experimental = {}
 problems = { shortenToSingleLine = false }
+run = "onType"
+rulesCustomizations = []
+experimental = {}
+# These settings don't seem to do anything, but some might be useful later when Helix supports a bit more LSP features
+# format = { enable = true }
+# codeActionsOnSave = { mode = "all", "source.fixAll.eslint" = true }
 # workingDirectory = { mode = "location" }  # Didn't make a difference
 
 [language-server.eslint.config.codeAction]
 disableRuleComment = { enable = true, location = "separateLine" }
 showDocumentation = { enable = false }
+
+[language-server.tailwindcss-ls]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
+
+[language-server.tailwindcss-ls.config]
+tailwindCSS = { experimental = { classRegex = [ "tw`([^`]*)", "tw\\(.*?['\"](.*?)['\"]", "clsx\\(([^)]*)\\)", "cn\\(([^)]*)\\)", ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"], ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"], "\\/\\*tw\\*\\/([^`]*)", "(?:className|class)\\s*=\\s*[\"'`]([^\"'`]*).*" ] } }
+

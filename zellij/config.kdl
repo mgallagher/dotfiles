@@ -21,6 +21,7 @@ keybinds clear-defaults=true {
         bind "n" { NewPane; SwitchToMode "locked"; }
         bind "p" { SwitchToMode "normal"; }
         bind "r" { NewPane "right"; SwitchToMode "locked"; }
+        bind "s" { NewPane "stacked"; SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
@@ -140,6 +141,14 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "locked"
         }
+        bind "s" {
+            LaunchOrFocusPlugin "zellij:share" {
+                floating true
+                move_to_focused_tab true
+            };
+            SwitchToMode "Normal"
+        }
+
     }
     shared_among "normal" "locked" {
         bind "Alt left" { MoveFocusOrTab "left"; }
@@ -161,6 +170,9 @@ keybinds clear-defaults=true {
         // These conflict with helix bindings
         // bind "Alt o" { MoveTab "right"; }
         // bind "Alt i" { MoveTab "left"; }
+        // Custom
+        bind "Alt F" { SwitchToMode "entersearch"; }
+        bind "Alt z" { ToggleFocusFullscreen; TogglePaneFrames; }
     }
     shared_except "locked" "renametab" "renamepane" {
         bind "Ctrl g" { SwitchToMode "locked"; }
@@ -175,11 +187,11 @@ keybinds clear-defaults=true {
     shared_except "locked" "entersearch" "renametab" "renamepane" "move" {
         bind "m" { SwitchToMode "move"; }
     }
-    shared_except "locked" "entersearch" "search" "renametab" "renamepane" "session" {
-        bind "o" { SwitchToMode "session"; }
-    }
     shared_except "locked" "tab" "entersearch" "renametab" "renamepane" {
         bind "t" { SwitchToMode "tab"; }
+    }
+    shared_except "locked" "tab" "entersearch" "search" "renametab" "renamepane" "session" {
+        bind "o" { SwitchToMode "session"; }
     }
     shared_except "locked" "tab" "scroll" "entersearch" "renametab" "renamepane" {
         bind "s" { SwitchToMode "scroll"; }
@@ -433,7 +445,7 @@ scrollback_lines_to_serialize 50000
 // Whether to show tips on startup
 // Default: true
 // 
-// show_startup_tips false
+show_startup_tips false
  
 // Whether to show release notes on first version run
 // Default: true

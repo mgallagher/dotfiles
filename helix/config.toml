@@ -5,12 +5,14 @@ true-color = true
 color-modes = true
 cursorline = true
 cursorcolumn = true
+auto-format = false
 end-of-line-diagnostics = "hint"
 # Prioritize home row keys for the 'gw' picker
 jump-label-alphabet = "jfkdls;aurieowpqnvmcxz"
 clipboard-provider = "termcode"
 insert-final-newline = false
 popup-border = "all"
+rainbow-brackets = true
 
 [editor.statusline]
 right = ["diagnostics", "selections", "register", "position", "position-percentage", "file-encoding"]
@@ -27,8 +29,9 @@ normal = "block"
 select = "underline"
 
 # Inline diagnostics - looks nice, but the code jumps around a bit too much for my liking
-# [editor.inline-diagnostics]
-# cursor-line = "warning" # show warnings and errors on the cursorline inline
+[editor.inline-diagnostics]
+cursor-line = "warning" # show warnings and errors on the cursorline inline
+# other-lines = "warning" # show warnings and errors on the cursorline inline
 
 [editor.file-picker]
 hidden = false
@@ -42,6 +45,9 @@ ret = "goto_word"
 x = "select_line_below"
 X = "select_line_above"
 ret = "goto_word"
+tab = "select_next_sibling"
+S-tab = "select_prev_sibling"
+Y = "@|dedent<ret><space>yu"
 
 # Move around windows
 A-h = "jump_view_left"
@@ -51,13 +57,35 @@ A-k = "jump_view_up"
 # Lazygit popup window
 C-l = ":sh zellij run -c -f --width 90%% --height 90%% -x 5%% -y 5%% -- lazygit"
 # C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
- 
-# Kakoune-like extend (not sure about this)
-# E = "extend_next_word_end"
-# W = "extend_next_word_start"
-# B = "extend_prev_word_end"
-# H = "extend_char_left"
-# L = "extend_char_right"
+
+# ( [ { < ' " ` /
+# Jump to next/previous pairings. Until this gets merged: https://github.com/helix-editor/helix/pull/11695
+[keys.normal."]"]
+"(" = "@lf)hmi)"
+")" = "@lf)hmi)"
+"{" = "@lf}hmi}"
+"}" = "@lf}hmi}"
+"[" = "@lf]hmi]"
+"]" = "@lf]hmi]"
+"'" = "@lf'lmi'"
+"`" = "@lf`lmi`"
+'"' = "@lf\"lmi\""
+# "/" = "@f/lmi/"
+# '>' = '@lf<gt>lmi<gt>'
+# "<" = "@lf>lmi>"
+
+[keys.normal."["]
+"(" = "@hF(lmi("
+")" = "@hF(lmi("
+"{" = "@hF{lmi}"
+"}" = "@hF{lmi}"
+"[" = "@hF[lmi]"
+"]" = "@hF[lmi]"
+"'" = "@hF'hmi'"
+"`" = "@hF`hmi`"
+'"' = "@hF\"hmi\""
+# "/" = "@F/hmi/"
+# '>' = '@lF>lmi>'
 
 # Single quote minor mode
 [keys.normal."'"]
@@ -74,19 +102,42 @@ t = '@/[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]*tw-[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]+<ret
 # Nicely formatted single-line git blame
 b = ":sh git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -1 --format='medium'"
 # Show a github URL
-u = ":sh gh browse -n %{buffer_name}:%{cursor_line}"
+# This doesn't work with long URLs since they wrap, though this is fine in zellij?
+# u = ":sh gh browse -n %{buffer_name}:%{cursor_line}"
+# u = ":insert-output gh browse -n %{buffer_name}:%{cursor_line}"
+u = ":sh zellij run -f --width 50 -- gh browse -n %{buffer_name}:%{cursor_line}"
 # Open the file in the git blame pager and go to the current line
 B = ":sh zellij run -fc -- git blame --color-by-age --color-lines %{buffer_name} && zellij action write-chars %{cursor_line}g"
+
+# <space> t for UI toggles
+# Need to clean these up
+[keys.normal.space.space.t]
+e = ":toggle end-of-line-diagnostics hint disable"
+i = ":toggle lsp.display-inlay-hints"
+o = ":toggle inline-diagnostics.other-lines warning disable"
+s = ":toggle soft-wrap.enable"
+w.y = ":set-option whitespace.render.newline all"
+w.n = ":set-option whitespace.render.newline none"
+
+# JS-specific helpers
+[keys.normal.space.space.j]
+# Log out the word under the cursor with console.log('Foo', Foo)
+l = "@miwyoconsole.log('<C-r>\"',<space><C-r>\");<esc>q"
 
 # Backslash minor mode for config stuff
 [keys.normal."\\"]
 c = ":config-open"
-r = ":config-reload"
+r = [":config-reload", ":reload-all"]
 l = ":open ~/.config/helix/languages.toml"
 t = ":open ~/.config/tmux/tmux.conf"
 j = ":open ~/.config/zellij/config.kdl"
 z = ":open ~/.zshrc"
 b = ":open ~/.bashrc"
+a = ":open ~/.aliases"
+
+# Maybe useful treesitter movements like first and last sibling?
+[keys.normal."A-t"]
+h = ":echo hello"
 
 # Other themes I like
 # everforst_dark
