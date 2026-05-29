@@ -42,6 +42,10 @@ language-servers = ["vscode-json-language-server"]
 name = "python"
 language-servers = [ "pyright" ]
 
+[language.formatter]
+command = "black"
+args = ["-", "--quiet", "--line-length=100"]
+
 # ESLint config
 [language-server.eslint]
 command = "vscode-eslint-language-server"

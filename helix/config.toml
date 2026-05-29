@@ -56,7 +56,15 @@ A-j = "jump_view_down"
 A-k = "jump_view_up"
 # Lazygit popup window
 C-l = ":sh zellij run -c -f --width 90%% --height 90%% -x 5%% -y 5%% -- lazygit"
-# C-g = ':sh /usr/bin/tmux popup -d "#{pane_current_path}" -xC -yC -w80%% -h80%% -E lazygit'
+
+# Yazi as a nice file explorer
+C-y = [
+  ':sh rm -f /tmp/unique-file',
+  ':insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file',
+  ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+  ':open %sh{cat /tmp/unique-file}',
+  ':redraw',
+]
 
 # ( [ { < ' " ` /
 # Jump to next/previous pairings. Until this gets merged: https://github.com/helix-editor/helix/pull/11695
@@ -99,17 +107,14 @@ t = '@/[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]*tw-[A-Za-z0-9-\[\]\*\:\=&_\(\)\/,@]+<ret
 
 # <space><space> for git commands
 [keys.normal.space.space]
-# Nicely formatted single-line git blame
+# Nicely formatted git blame
 b = ":sh git blame -L %{cursor_line},+1 %{buffer_name} | awk '{print $1}' | xargs git log -1 --format='medium'"
-# Show a github URL
-# This doesn't work with long URLs since they wrap, though this is fine in zellij?
-# u = ":sh gh browse -n %{buffer_name}:%{cursor_line}"
-# u = ":insert-output gh browse -n %{buffer_name}:%{cursor_line}"
-u = ":sh zellij run -f --width 50 -- gh browse -n %{buffer_name}:%{cursor_line}"
+# Copy the github URL
+u = ":sh gh browse -n %{buffer_name}:%{cursor_line} | osc52copy"
 # Open the file in the git blame pager and go to the current line
 B = ":sh zellij run -fc -- git blame --color-by-age --color-lines %{buffer_name} && zellij action write-chars %{cursor_line}g"
 
-# <space> t for UI toggles
+# <space><space> t for UI toggles
 # Need to clean these up
 [keys.normal.space.space.t]
 e = ":toggle end-of-line-diagnostics hint disable"
@@ -118,6 +123,12 @@ o = ":toggle inline-diagnostics.other-lines warning disable"
 s = ":toggle soft-wrap.enable"
 w.y = ":set-option whitespace.render.newline all"
 w.n = ":set-option whitespace.render.newline none"
+
+# <space><space> f for copying file info
+[keys.normal.space.space.f]
+y = ":sh osc52copy %{buffer_name}"
+f = ":sh osc52copy `basename %{buffer_name}`"
+a = ":sh osc52copy `realpath %{buffer_name}`"
 
 # JS-specific helpers
 [keys.normal.space.space.j]
@@ -134,10 +145,6 @@ j = ":open ~/.config/zellij/config.kdl"
 z = ":open ~/.zshrc"
 b = ":open ~/.bashrc"
 a = ":open ~/.aliases"
-
-# Maybe useful treesitter movements like first and last sibling?
-[keys.normal."A-t"]
-h = ":echo hello"
 
 # Other themes I like
 # everforst_dark

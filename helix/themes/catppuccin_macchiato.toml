@@ -1,5 +1,8 @@
 inherits = "catppuccin_macchiato"
 
+# Work with transparent backgrounds (assuming terminal emulator is using the catppuccin theme)
+"ui.background" = {}
+
 # Add colored border to popup menu and blend bg in with everything else
 "ui.popup" = { fg = "sky", bg = "base" }
 
